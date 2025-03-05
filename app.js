@@ -16,6 +16,8 @@ app.get("/",(req,res)=>{
 res.send("this is the home page")
 })
 
+const recipeRoute = require('./routes/recipeRoutes')
+app.use("/",recipeRoute)
 
 
 mongoose.connection.once('open', () => {
