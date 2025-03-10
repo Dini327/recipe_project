@@ -15,8 +15,19 @@ exports.getAllRecipes=async(req,res)=>{
         res.status(500).json({ message: 'Failed to get recipes' });
       }
 }
-exports.deleteRecipe = (req,res) =>{
+exports.deleteRecipe = async(req,res) =>{
 
+  const  {recipeId}  = req.params;
+    try {
+      const deletedUser = await Recipe.findOneAndDelete({ recipeId: recipeId });
+      if (!deletedUser) {
+        return res.status(404).json({ message: 'recipe not found' });
+      }
+      res.json({ message: 'recipe deleted successfully' });
+    } catch (error) {
+      console.error('Failed to delete recipe:', error);
+      res.status(500).json({ message: 'Failed to delete recipe' });
+    }
 }
 
 exports.updateRecipe = (req,res) =>{}
